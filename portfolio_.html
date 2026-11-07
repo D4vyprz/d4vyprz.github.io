@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | D4vyprz</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#08080a',
+                            dark: '#101015',
+                            card: '#16161f',
+                            border: '#2a2a3a',
+                            red: '#ff003c',
+                            redglow: '#ff1a40',
+                            reddark: '#80001e',
+                            gray: '#94a3b8',
+                            light: '#e2e8f0'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['"Fira Code"', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Cyber Background Grid */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 0, 60, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 60, 0.05) 1px, transparent 1px);
+        }
+
+        /* Neon Shadow Effects */
+        .neon-glow-red {
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.4), inset 0 0 15px rgba(255, 0, 60, 0.1);
+        }
+
+        .neon-glow-strong {
+            box-shadow: 0 0 25px rgba(255, 0, 60, 0.7);
+        }
+
+        .neon-text-red {
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.7), 0 0 20px rgba(255, 0, 60, 0.4);
+        }
+
+        /* Clip-path for Cyber Cut Corners */
+        .cyber-corner {
+            clip-path: polygon(0 0,
+                    calc(100% - 15px) 0,
+                    100% 15px,
+                    100% 100%,
+                    15px 100%,
+                    0 calc(100% - 15px));
+        }
+
+        .cyber-corner-sm {
+            clip-path: polygon(0 0,
+                    calc(100% - 8px) 0,
+                    100% 8px,
+                    100% 100%,
+                    8px 100%,
+                    0 calc(100% - 8px));
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Cursor blinking */
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a3a;
+            border-radius: 4px;
+            border: 1px solid #ff003c;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff003c;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-cyber-black text-cyber-light font-sans antialiased bg-grid min-h-screen selection:bg-cyber-red selection:text-white relative">
+
+    <!-- Header / Nav -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-cyber-dark/80 backdrop-blur-md border-b border-cyber-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+
+            <!-- Terminal Logo -->
+            <a href="#intro" class="font-mono text-sm sm:text-base font-bold text-white flex items-center gap-2 group">
+                <span class="text-cyber-red">&gt;</span>
+                <span class="group-hover:text-cyber-red transition-colors duration-300">D4vyprz@sysadmin-dev:~#</span>
+                <span class="inline-block w-2 h-4 bg-cyber-red cursor-blink"></span>
+            </a>
+
+            <!-- System Status Indicator (Desktop) -->
+            <div
+                class="hidden md:flex items-center gap-3 px-3 py-1 bg-cyber-black/60 border border-cyber-border rounded-full font-mono text-xs">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span class="text-gray-400">SYS_STATUS: <span
+                        class="text-emerald-400 font-semibold">ONLINE</span></span>
+                <span class="text-cyber-border">|</span>
+                <span class="text-cyber-gray">PING: <span class="text-cyber-red font-semibold">13ms</span></span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden sm:flex items-center space-x-6 font-mono text-xs sm:text-sm">
+                <a href="#intro" class="hover:text-cyber-red transition-colors">[01.INTRO]</a>
+                <a href="#stack" class="hover:text-cyber-red transition-colors">[02.STACK]</a>
+                <a href="#projects" class="hover:text-cyber-red transition-colors">[03.PROYECTOS]</a>
+                <a href="#contact" class="hover:text-cyber-red transition-colors">[04.CONTACTO]</a>
+            </nav>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menuBtn" class="sm:hidden text-cyber-gray hover:text-cyber-red focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu"
+            class="hidden sm:hidden bg-cyber-dark border-b border-cyber-red/30 px-4 py-4 space-y-3 font-mono text-sm">
+            <a href="#intro" class="block hover:text-cyber-red transition-colors">[01.INTRO]</a>
+            <a href="#stack" class="block hover:text-cyber-red transition-colors">[02.STACK]</a>
+            <a href="#projects" class="block hover:text-cyber-red transition-colors">[03.PROYECTOS]</a>
+            <a href="#contact" class="block hover:text-cyber-red transition-colors">[04.CONTACTO]</a>
+            <div class="pt-2 border-t border-cyber-border flex items-center gap-2 text-xs">
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span class="text-gray-400">STATUS: ONLINE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28">
+
+        <!-- SECTION 1: HERO / INTRO -->
+        <section id="intro" class="min-h-[80vh] flex flex-col justify-center relative py-12">
+
+            <!-- Cyber Decorative Frame Backdrop -->
+            <div
+                class="absolute -top-10 -left-10 w-40 h-40 border-l-2 border-t-2 border-cyber-red/20 pointer-events-none">
+            </div>
+            <div
+                class="absolute -bottom-10 -right-10 w-40 h-40 border-r-2 border-b-2 border-cyber-red/20 pointer-events-none">
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+                <!-- Text Intro Column -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 bg-cyber-red/10 border border-cyber-red/40 text-cyber-red font-mono text-xs rounded cyber-corner-sm">
+                        <i class="fa-solid fa-terminal text-xs"></i>
+                        <span>ESTUDIANTE ASIR + JUNIOR DEVELOPER</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        CREANDO INFRASTRUCTURAS <br>
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-red via-red-500 to-rose-400 neon-text-red">
+                            Escribiendo código...
+                        </span>
+                    </h1>
+
+                    <!-- Typing Effect Container -->
+                    <div
+                        class="bg-cyber-card border border-cyber-border p-4 rounded-lg font-mono text-sm sm:text-base text-cyber-gray min-h-[90px] shadow-lg relative">
+                        <div
+                            class="flex items-center gap-2 border-b border-cyber-border pb-2 mb-3 text-xs text-gray-500">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+                            <span class="ml-2">bash - interactive_profile.sh</span>
+                        </div>
+                        <p class="text-emerald-400">$ <span id="typing-text" class="text-cyber-light"></span><span
+                                class="inline-block w-2.5 h-4 bg-cyber-red cursor-blink align-middle ml-1"></span></p>
+                    </div>
+
+                    <p class="text-cyber-gray text-base sm:text-lg leading-relaxed max-w-2xl">
+                        Fusión entre la <strong class="text-white">administración de sistemas/redes</strong>
+                        (configuración de servidores, redes, seguridad y despliegue) y el <strong
+                            class="text-white">desarrollo de software</strong> (automatización, scripting y creación de
+                        aplicaciones).
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-wrap gap-4 pt-4 font-mono">
+                        <a href="#projects"
+                            class="px-6 py-3 bg-cyber-red hover:bg-cyber-redglow text-white font-bold text-sm tracking-wider uppercase cyber-corner neon-glow-red transition-all duration-300 flex items-center gap-2">
+                            <i class="fa-solid fa-code"></i> Explorar Proyectos
+                        </a>
+                        <a href="#contact"
+                            class="px-6 py-3 bg-cyber-dark hover:bg-cyber-card text-cyber-light hover:text-cyber-red border border-cyber-border hover:border-cyber-red font-semibold text-sm tracking-wider uppercase cyber-corner transition-all duration-300 flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Terminal Box Column -->
+                <div class="lg:col-span-5">
+                    <div
+                        class="bg-cyber-dark border border-cyber-red/50 rounded-lg p-5 cyber-corner shadow-2xl relative group hover:border-cyber-red transition-all duration-500">
+                        <div
+                            class="absolute -top-3 right-4 bg-cyber-red text-black font-mono text-xs font-bold px-2 py-0.5 rounded">
+                            SYS_MONITOR
+                        </div>
+
+                        <div class="space-y-4 font-mono text-xs">
+                            <div class="flex justify-between border-b border-cyber-border pb-2">
+                                <span class="text-cyber-gray">USER:</span>
+                                <span class="text-cyber-red font-semibold">D4vyprz</span>
+                            </div>
+                            <div class="flex justify-between border-b border-cyber-border pb-2">
+                                <span class="text-cyber-gray">GRADO:</span>
+                                <span class="text-white">FP GS ASIR (En Curso)</span>
+                            </div>
+                            <div class="flex justify-between border-b border-cyber-border pb-2">
+                                <span class="text-cyber-gray">ENFOQUE:</span>
+                                <span class="text-white">DevOps / Admin Sistemas / Scripting</span>
+                            </div>
+
+                            <!-- Skill Level Indicators -->
+                            <div class="space-y-2 pt-2">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-cyber-gray">Administración Linux/Windows</span>
+                                        <span class="text-cyber-red">85%</span>
+                                    </div>
+                                    <div
+                                        class="w-full bg-cyber-black rounded-full h-1.5 border border-cyber-border overflow-hidden">
+                                        <div class="bg-cyber-red h-1.5 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-cyber-gray">Redes & Servicios (DNS, DHCP, VPN)</span>
+                                        <span class="text-cyber-red">50%</span>
+                                    </div>
+                                    <div
+                                        class="w-full bg-cyber-black rounded-full h-1.5 border border-cyber-border overflow-hidden">
+                                        <div class="bg-cyber-red h-1.5 rounded-full" style="width: 50%"></div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-cyber-gray">Programación & Automatización</span>
+                                        <span class="text-cyber-red">78%</span>
+                                    </div>
+                                    <div
+                                        class="w-full bg-cyber-black rounded-full h-1.5 border border-cyber-border overflow-hidden">
+                                        <div class="bg-cyber-red h-1.5 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="pt-3 flex items-center justify-between text-[11px] text-cyber-gray bg-cyber-black/50 p-2 rounded border border-cyber-border">
+                                <span><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Firewall:
+                                    Active</span>
+                                <span><i class="fa-solid fa-server text-cyber-red mr-1"></i> Node: Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: HABILIDADES / DASHBOARD TECH -->
+        <section id="stack" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-cyber-border pb-4 gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white font-mono flex items-center gap-2">
+                        <span class="text-cyber-red">&gt;</span> [02.DASHBOARD_TECH]
+                    </h2>
+                    <p class="text-cyber-gray text-sm mt-1">Stack tecnológico y competencias del perfil híbrido</p>
+                </div>
+                <div class="font-mono text-xs text-cyber-gray">
+                    <span class="inline-block w-2 h-2 rounded-full bg-cyber-red animate-pulse mr-1"></span>
+                    MODULES_LOADED: 3/3
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Pilar 1: Sistemas y Redes -->
+                <div
+                    class="bg-cyber-card border border-cyber-border hover:border-cyber-red rounded-lg p-6 cyber-corner transition-all duration-300 group hover:-translate-y-1">
+                    <div
+                        class="w-12 h-12 bg-cyber-dark border border-cyber-red/40 rounded-lg flex items-center justify-center text-cyber-red text-xl mb-4 group-hover:scale-110 group-hover:bg-cyber-red group-hover:text-white transition-all">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white font-mono mb-2">Sistemas & Redes</h3>
+                    <p class="text-cyber-gray text-xs mb-4">Gestión de infraestructura, servidores y arquitectura de
+                        red.</p>
+
+                    <ul class="space-y-2 font-mono text-xs text-cyber-light">
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-brands fa-linux text-cyber-red"></i> Linux (Ubuntu Server, Debian)
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-brands fa-windows text-cyber-red"></i> Windows Server & Active Directory
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-solid fa-server text-cyber-red"></i> Servicios: DNS, DHCP, Web (Nginx/Apache)
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-solid fa-shield-virus text-cyber-red"></i> Seguridad en Redes
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pilar 2: Programación y Scripting -->
+                <div
+                    class="bg-cyber-card border border-cyber-border hover:border-cyber-red rounded-lg p-6 cyber-corner transition-all duration-300 group hover:-translate-y-1">
+                    <div
+                        class="w-12 h-12 bg-cyber-dark border border-cyber-red/40 rounded-lg flex items-center justify-center text-cyber-red text-xl mb-4 group-hover:scale-110 group-hover:bg-cyber-red group-hover:text-white transition-all">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white font-mono mb-2">Programación & Scripts</h3>
+                    <p class="text-cyber-gray text-xs mb-4">Desarrollo de herramientas personalizadas y tareas
+                        automatizadas.</p>
+
+                    <ul class="space-y-2 font-mono text-xs text-cyber-light">
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-brands fa-python text-cyber-red"></i> Python (Automatización, Scripting, APIs)
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-solid fa-terminal text-cyber-red"></i> Bash Scripting / PowerShell
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-brands fa-js text-cyber-red"></i> JavaScript / HTML5 & CSS3 (Tailwind)
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-solid fa-database text-cyber-red"></i> SQL (MySQL, PostgreSQL)
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pilar 3: Herramientas y DevOps -->
+                <div
+                    class="bg-cyber-card border border-cyber-border hover:border-cyber-red rounded-lg p-6 cyber-corner transition-all duration-300 group hover:-translate-y-1">
+                    <div
+                        class="w-12 h-12 bg-cyber-dark border border-cyber-red/40 rounded-lg flex items-center justify-center text-cyber-red text-xl mb-4 group-hover:scale-110 group-hover:bg-cyber-red group-hover:text-white transition-all">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white font-mono mb-2">DevOps & En torno</h3>
+                    <p class="text-cyber-gray text-xs mb-4">Virtualización, contenedores y control de versiones para
+                        integración continua.</p>
+
+                    <ul class="space-y-2 font-mono text-xs text-cyber-light">
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-brands fa-docker text-cyber-red"></i> Docker & Docker Compose
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-solid fa-cubes text-cyber-red"></i> Virtualización (Proxmox, VMware,
+                            VirtualBox)
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-brands fa-git-alt text-cyber-red"></i> Git & GitHub / Control de versiones
+                        </li>
+                        <li class="flex items-center gap-2 bg-cyber-black/40 p-2 rounded border border-cyber-border/50">
+                            <i class="fa-solid fa-desktop text-cyber-red"></i> Monitorización (Zabbix, Grafana básica)
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: PROYECTOS -->
+        <section id="projects" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-cyber-border pb-4 gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white font-mono flex items-center gap-2">
+                        <span class="text-cyber-red">&gt;</span> [03.PROYECTOS_DESTACADOS]
+                    </h2>
+                    <p class="text-cyber-gray text-sm mt-1">Casos prácticos de automatización, sistemas y desarrollo</p>
+                </div>
+
+                <!-- Interactive Filters -->
+                <div id="project-filters" class="flex flex-wrap gap-2 font-mono text-xs">
+                    <button data-filter="all"
+                        class="filter-btn active px-3 py-1 bg-cyber-red text-white font-bold rounded cyber-corner-sm">TODOS</button>
+                    <button data-filter="sysadmin"
+                        class="filter-btn px-3 py-1 bg-cyber-dark hover:bg-cyber-card border border-cyber-border text-cyber-gray hover:text-white rounded cyber-corner-sm">SYSADMIN</button>
+                    <button data-filter="scripting"
+                        class="filter-btn px-3 py-1 bg-cyber-dark hover:bg-cyber-card border border-cyber-border text-cyber-gray hover:text-white rounded cyber-corner-sm">SCRIPTING</button>
+                    <button data-filter="dev"
+                        class="filter-btn px-3 py-1 bg-cyber-dark hover:bg-cyber-card border border-cyber-border text-cyber-gray hover:text-white rounded cyber-corner-sm font-semibold">DEV</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-container">
+
+                <!-- Project Card 1: SysAdmin + Scripting -->
+                <div class="project-card bg-cyber-card border border-cyber-border rounded-lg overflow-hidden flex flex-col justify-between cyber-corner hover:border-cyber-red transition-all duration-300 group"
+                    data-category="scripting sysadmin">
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span
+                                class="text-xs font-mono text-cyber-red bg-cyber-red/10 border border-cyber-red/30 px-2.5 py-0.5 rounded">
+                                CMD / PowerShell
+                            </span>
+                            <i
+                                class="fa-solid fa-server text-cyber-gray group-hover:text-cyber-red transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white font-mono group-hover:text-cyber-red transition-colors">
+                            Scripts-Batch</h3>
+                        <p class="text-cyber-gray text-xs leading-relaxed">
+                            SPor aquí guardo los scripts más elaborados que he llegado a desarrollar en Batch...
+
+                            😒 Sí, lo sé! Mi profesora decía lo mismo es mejor Powershell, pero por algo habrá que
+                            empezar.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2 font-mono text-[10px] text-cyber-gray">
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">Batch</span>
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">Windows</span>
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">CMD</span>
+                        </div>
+                    </div>
+                    <div
+                        class="px-6 py-3 bg-cyber-dark border-t border-cyber-border flex justify-between items-center font-mono text-xs">
+                        <span class="text-gray-500">CATEGORY: SCRIPTING</span>
+                        <a href="https://github.com/D4vyprz/Scripts-Batch" target="_blank" rel="noopener noreferrer"
+                            class="text-cyber-light hover:text-cyber-red flex items-center gap-1 transition-colors">
+                            <i class="fa-brands fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2: Dev / ESP32 -->
+                <div class="project-card bg-cyber-card border border-cyber-border rounded-lg overflow-hidden flex flex-col justify-between cyber-corner hover:border-cyber-red transition-all duration-300 group"
+                    data-category="dev">
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span
+                                class="text-xs font-mono text-cyber-red bg-cyber-red/10 border border-cyber-red/30 px-2.5 py-0.5 rounded">
+                                Proximamente más...
+                            </span>
+                            <i
+                                class="fa-brands fa-docker text-cyber-gray group-hover:text-cyber-red transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white font-mono group-hover:text-cyber-red transition-colors">
+                          Desarrollo de firmware para arquitectura IoT en ESP32  </h3>
+                        <p class="text-cyber-gray text-xs leading-relaxed">
+                            Proximamente...
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2 font-mono text-[10px] text-cyber-gray">
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">C++</span>
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">IoT</span>
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">ESP32</span>
+                        </div>
+                    </div>
+                    <div
+                        class="px-6 py-3 bg-cyber-dark border-t border-cyber-border flex justify-between items-center font-mono text-xs">
+                        <span class="text-gray-500">CATEGORY: DEV</span>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                            class="text-cyber-light hover:text-cyber-red flex items-center gap-1 transition-colors">
+                            <i class="fa-brands fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3: Servidor Web / IoT -->
+                <div class="project-card bg-cyber-card border border-cyber-border rounded-lg overflow-hidden flex flex-col justify-between cyber-corner hover:border-cyber-red transition-all duration-300 group"
+                    data-category="dev">
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <span
+                                class="text-xs font-mono text-cyber-red bg-cyber-red/10 border border-cyber-red/30 px-2.5 py-0.5 rounded">
+                                Servidor Web / Microcontrolador IoT
+                            </span>
+                            <i
+                                class="fa-solid fa-network-wired text-cyber-gray group-hover:text-cyber-red transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white font-mono group-hover:text-cyber-red transition-colors">
+                            Sistema de monitoreo de temperatura y húmedad</h3>
+                        <p class="text-cyber-gray text-xs leading-relaxed">
+                            Proximamente...
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2 font-mono text-[10px] text-cyber-gray">
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">ESP32</span>
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">Arduino</span>
+                            <span class="bg-cyber-black px-2 py-1 rounded border border-cyber-border">Servidor-Web</span>
+                        </div>
+                    </div>
+                    <div
+                        class="px-6 py-3 bg-cyber-dark border-t border-cyber-border flex justify-between items-center font-mono text-xs">
+                        <span class="text-gray-500">CATEGORY: SYSADMIN</span>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                            class="text-cyber-light hover:text-cyber-red flex items-center gap-1 transition-colors">
+                            <i class="fa-brands fa-github"></i> Code
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: CONTACTO & REDES -->
+        <section id="contact" class="pb-16 space-y-8">
+            <div class="border-b border-cyber-border pb-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white font-mono flex items-center gap-2">
+                    <span class="text-cyber-red">&gt;</span> [04.CANALES_CONTACTO]
+                </h2>
+                <p class="text-cyber-gray text-sm mt-1">Conecta conmigo para proyectos, prácticas o colaboraciones
+                    profesionales</p>
+            </div>
+
+            <div
+                class="bg-cyber-dark border border-cyber-red/40 rounded-xl p-6 sm:p-10 cyber-corner relative overflow-hidden neon-glow-red">
+
+                <!-- Background Accent Scanline effect -->
+                <div class="scanlines absolute inset-0 opacity-20 pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20">
+
+                    <div class="lg:col-span-7 space-y-4">
+                        <h3 class="text-2xl font-bold text-white font-mono">¿Interesado en mi perfil?</h3>
+                        <p class="text-cyber-gray text-sm leading-relaxed">
+                            Busco oportunidades laborales, prácticas profesionales o colaboraciones donde pueda aplicar
+                            mis conocimientos en gestión de redes, sistemas y desarrollo de software.
+                        </p>
+
+                        <!-- Quick Email Copy Box -->
+                        <div class="pt-4">
+                            <label class="block font-mono text-xs text-cyber-gray mb-2">EMAIL DIRECTO DE
+                                CONTACTO:</label>
+                            <div class="flex flex-col sm:flex-row items-stretch gap-2 max-w-md">
+                                <div
+                                    class="bg-cyber-black border border-cyber-border px-4 py-3 rounded text-white font-mono text-xs sm:text-sm flex-1 flex items-center truncate">
+                                    <i class="fa-solid fa-envelope text-cyber-red mr-2"></i>
+                                    <span id="email-text">dprezcam13@gmail.com</span>
+                                </div>
+                                <button id="copy-email-btn"
+                                    class="px-5 py-3 bg-cyber-red hover:bg-cyber-redglow text-white font-mono font-bold text-xs uppercase rounded transition-all flex items-center justify-center gap-2">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span id="copy-btn-text">COPIAR</span>
+                                </button>
+                            </div>
+                            <span id="copy-feedback" class="text-emerald-400 font-mono text-xs mt-2 hidden block">
+                                <i class="fa-solid fa-check text-xs"></i> ¡Copiado al portapapeles!
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Social Networks / Nodes -->
+                    <div class="lg:col-span-5 space-y-3 font-mono">
+                        <span class="text-xs text-cyber-gray block mb-1">CONEXIONES DE RED (NODOS):</span>
+
+                        <!-- GitHub Node -->
+                        <a href="https://github.com/D4vyprz" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center justify-between p-3 bg-cyber-card hover:bg-cyber-red/10 border border-cyber-border hover:border-cyber-red rounded transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i
+                                    class="fa-brands fa-github text-xl text-cyber-red group-hover:scale-110 transition-transform"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">GitHub</div>
+                                    <div class="text-[11px] text-cyber-gray">@D4vyprz</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-cyber-gray group-hover:text-cyber-red">CONNECT &rarr;</span>
+                        </a>
+
+                        <!-- LinkedIn Node -->
+                        <a href="https://www.linkedin.com/in/david-pérez-cameselle-613333242" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center justify-between p-3 bg-cyber-card hover:bg-cyber-red/10 border border-cyber-border hover:border-cyber-red rounded transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i
+                                    class="fa-brands fa-linkedin text-xl text-cyber-red group-hover:scale-110 transition-transform"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">LinkedIn</div>
+                                    <div class="text-[11px] text-cyber-gray">in/David Pérez Cameselle</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-cyber-gray group-hover:text-cyber-red">CONNECT &rarr;</span>
+                        </a>
+
+                        <!-- Telegram/Discord Node -->
+                        <a href="https://t.me/Davyprz" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center justify-between p-3 bg-cyber-card hover:bg-cyber-red/10 border border-cyber-border hover:border-cyber-red rounded transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i
+                                    class="fa-brands fa-telegram text-xl text-cyber-red group-hover:scale-110 transition-transform"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">Telegram</div>
+                                    <div class="text-[11px] text-cyber-gray">@Davyprz</div>
+                                </div>
+                            </div>
+                            <span class="text-xs text-cyber-gray group-hover:text-cyber-red">CONNECT &rarr;</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-cyber-border bg-cyber-black py-8 font-mono text-xs text-cyber-gray">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="text-white font-bold">&copy; <span id="year"></span> D4vyprz - ASIR & Dev Portfolio.</span> Todos los
+                derechos reservados.
+            </div>
+            <div class="flex items-center gap-4 text-gray-500">
+                <span>SYSTEM_VERSION: v2.4</span>
+                <span>|</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 1. Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on click link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Typing Effect for Introduction
+        const phrases = [
+            "Estudiante de Administración de Sistemas Informáticos en Red (ASIR).",
+            "Desarrollador aprendiendp Python, Scripting & Web Tools.",
+            "Apasionado por la Infraestructura, Arduino y la Automatización."
+        ];
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 50;
+        const deletingSpeed = 30;
+        const delayBetweenPhrases = 2000;
+        const typingElement = document.getElementById('typing-text');
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+                typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(typeEffect, delayBetweenPhrases);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(typeEffect, 500);
+            } else {
+                setTimeout(typeEffect, isDeleting ? deletingSpeed : typingSpeed);
+            }
+        }
+
+        // Start typing effect on load
+        window.addEventListener('DOMContentLoaded', () => {
+            typeEffect();
+        });
+
+        // 3. Project Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button state
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-cyber-red', 'text-white', 'font-bold');
+                    b.classList.add('bg-cyber-dark', 'text-cyber-gray');
+                });
+                btn.classList.remove('bg-cyber-dark', 'text-cyber-gray');
+                btn.classList.add('bg-cyber-red', 'text-white', 'font-bold');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const categories = card.getAttribute('data-category');
+                        if (categories && categories.includes(filter)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // 4. Copy Email Logic with Fallback for iframe restrictions
+        const copyBtn = document.getElementById('copy-email-btn');
+        const emailText = document.getElementById('email-text').innerText;
+        const copyFeedback = document.getElementById('copy-feedback');
+        const copyBtnText = document.getElementById('copy-btn-text');
+
+        copyBtn.addEventListener('click', () => {
+            // Using execCommand fallback for strict browser sandboxes / iframe environments
+            const tempInput = document.createElement('input');
+            tempInput.value = emailText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+
+            try {
+                document.execCommand('copy');
+                // Show visual feedback
+                copyFeedback.classList.remove('hidden');
+                copyBtnText.innerText = 'COPIADO';
+
+                setTimeout(() => {
+                    copyFeedback.classList.add('hidden');
+                    copyBtnText.innerText = 'COPIAR';
+                }, 3000);
+            } catch (err) {
+                console.error('Error al copiar el email: ', err);
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        });
+    </script>
+</body>
+</html>
